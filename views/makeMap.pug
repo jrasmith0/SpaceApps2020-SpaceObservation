@@ -25,9 +25,7 @@ head
 			}
 
 			function getLocation() {
-				console.log("here now")
 				if (navigator.geolocation) {
-					console.log("now here")
 					var options = {timeout: 60000};
 					navigator.geolocation.getCurrentPosition(showPosition, positionErrorHandler, options);
 				} else {
@@ -36,7 +34,6 @@ head
 			}
 			
 			function showPosition(position) {
-				console.log("Here")
 				if (position.latitude === undefined || position.longitude === undefined) {
 					generateURL(43.6532, 79.3832)
 				} else {
@@ -64,7 +61,6 @@ head
 				planetarium.setLongitude(long);
 				planetarium.moveIt();
 			} else {
-				console.log("Here")
 				getLocation();
 			}
 
