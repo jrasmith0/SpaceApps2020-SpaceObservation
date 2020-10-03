@@ -28,7 +28,7 @@ head
 			}
 
 			function generateURL(latitude, longitude) {
-				var url = "http://localhost:3000/?lat=" +  latitude + "&long=" + longitude;
+				var url = window.location.href.split('?')[0] + "?lat=" +  latitude + "&long=" + longitude;
 				window.location = url;
 			}
 
