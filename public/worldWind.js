@@ -3,6 +3,7 @@ var wwd = new WorldWind.WorldWindow("canvasOne");
 wwd.addLayer(new WorldWind.BMNGLayer());
 wwd.addLayer(new WorldWind.BingAerialWithLabelsLayer(null));
 
+wwd.addLayer(new WorldWind.StarFieldLayer());
 wwd.addLayer(new WorldWind.AtmosphereLayer(wwd));
 
 wwd.addLayer(new WorldWind.CompassLayer());
