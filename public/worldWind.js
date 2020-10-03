@@ -85,7 +85,8 @@ var viewLocationClick = function (recognizer) {
     if (pickList.objects.length === 1 && pickList.objects[0].isTerrain) {
         var position = pickList.objects[0].position;
         console.log(position.latitude, position.longitude);
-        var url = 'http://localhost:3000/?lat=' + position.latitude + '&long=' + position.longitude;
+        var url =  window.location.href.split('/')[0] + '/?lat=' + position.latitude + '&long=' + position.longitude;
+        console.log(url);
         window.location = url;
     }
 };
