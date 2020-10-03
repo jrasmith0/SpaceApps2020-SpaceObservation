@@ -1,0 +1,24 @@
+{
+  "name": "space_apps",
+  "version": "1.0.0",
+  "description": "Project solution for the 2020 Space Apps Hackathon challenge: Hey! What are you looking at?",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jrasmith0/SpaceApps2020-SpaceObservation.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jrasmith0/SpaceApps2020-SpaceObservation/issues"
+  },
+  "homepage": "https://github.com/jrasmith0/SpaceApps2020-SpaceObservation#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "jquery": "^3.5.1",
+    "pug": "^3.0.0"
+  }
+}
