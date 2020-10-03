@@ -66,7 +66,7 @@ head
 
 			var json = !{JSON.stringify(jsonList)};
 
-			for(let i =0; i < 6; i++){
+			for(let i =0; i <  6; i++){
 				let ra = json[i]['\"RA (J2000']['0)\"'];
 				let dec = json[i]['\"Dec'][' (J2000']['0)\"'];
 				let name =  json[i]['\"Target Name\"']
@@ -74,7 +74,8 @@ head
 					'ra':ra,
 					'dec':dec,
 					'label': name,
-					'colour':'rgb(255,220,220)'
+					'colour':'rgb(255,220,220)',
+					'url': 'worldWind.html?pos=' + ra + ',' + dec + ',10000000&loc=' + lat + ',' + long
 				})
 			}
 
