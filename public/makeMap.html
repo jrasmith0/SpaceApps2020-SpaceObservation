@@ -1,5 +1,7 @@
 <!DOCTYPE HTML>
 <head>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+	<link rel="stylesheet" href="main.css">
 	<script src="stuquery.min.js" type="text/javascript"></script>
 	<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 	<script src="virtualsky.min.js" type="text/javascript"></script>
@@ -9,7 +11,7 @@
 			let searchParams = new URLSearchParams(window.location.search)
 
 			var planetarium = S.virtualsky({
-				id: 'starmap1',
+				id: 'starmap',
 				projection: 'stereo'
 			});
 
@@ -22,12 +24,20 @@
 			}
 
 			function showPosition(position) {
-				generateURL(position.coords)
+				generateURL(position.latitude, position.longitude)
 			}
 
-			function generateURL(coords) {
-				var url = "http://localhost:3000/?lat=" +  coords.latitude + "&long=" +coords.longitude;
+			function generateURL(latitude, longitude) {
+				var url = "http://localhost:3000/?lat=" +  latitude + "&long=" + longitude;
 				window.location = url;
+			}
+
+			document.getElementById("update").addEventListener("click", updateLocation, false);
+
+			function updateLocation() {
+				latitude = document.getElementById('latitude').value;
+				longitude = document.getElementById('longitude').value;
+				generateURL(latitude, longitude);
 			}
 			
 			if (document.location.search.length) {
@@ -56,6 +66,17 @@
 </head>
 
 <body>
-	<div id="starmap1" style="width:400px;height:400px;"></div>
-	<p id="location"></p>
+	<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+		<a class="navbar-brand" href="#">Placeholder</a>
+		<div class="form-inline my-2 my-lg-0 right-align-form">
+			<input id="latitude" class="form-control mr-sm-2" type="text" placeholder="Latitude" aria-label="Latitude">
+			<input id="longitude" class="form-control mr-sm-2" type="text" placeholder="Longtitude" aria-label="Longitude">
+			<button id="update" class="btn btn-outline-success my-2 my-sm-0" type="button">Update</button>
+		</div>
+	</nav>
+
+	<div class="main-container">
+		<div id="starmap"></div>
+	</div>
+	
 </body>
