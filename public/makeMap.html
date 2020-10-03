@@ -2,18 +2,21 @@
 <head>
 	<script src="stuquery.min.js" type="text/javascript"></script>
 	<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-	<script src="virtualsky.min.js" type="text/javascript"></script>
+});
+	<script src="virtualsky-0.6.2.min.js" type="text/javascript"></script>
 	<script>
-		S(document).ready(function() {
+		$(document).ready(function() {
 
-        	var planetarium = S.virtualsky({
-                id: 'starmap1'
-        	});
-
-		});
+        var planetarium = $.virtualsky({
+                id: 'starmap',
+                projection: 'stereo',
+                latitude: 34.4326,
+                longitude: -119.86286
+        });
+});
 	</script>
 </head>
 
 <body>
-	<div id="starmap1" style="width:400px;height:400px;"></div>
+	<div id="starmap" style="width:400px;height:400px;"></div>
 </body>
