@@ -7,13 +7,11 @@
 		S(document).ready(function() {
 			let lat, long;
 			let searchParams = new URLSearchParams(window.location.search)
-			
-			if (document.location.search.length) {
-				lat = searchParams.get('lat');
-				long = searchParams.get('long');
-			} else {
-				getLocation();
-			}
+
+			var planetarium = S.virtualsky({
+				id: 'starmap1',
+				projection: 'stereo'
+			});
 
 			function getLocation() {
 				if (navigator.geolocation) {
@@ -31,13 +29,17 @@
 				var url = "http://localhost:3000/?lat=" +  coords.latitude + "&long=" +coords.longitude;
 				window.location = url;
 			}
-			console.log(lat, long);
-
-        	var planetarium = S.virtualsky({
-				id: 'starmap1',
-				projection: 'stereo'
-			});
 			
+			if (document.location.search.length) {
+				lat = searchParams.get('lat');
+				long = searchParams.get('long');
+				planetarium.setLatitude(lat);
+				planetarium.setLongitude(long);
+				planetarium.moveIt();
+			} else {
+				getLocation();
+			}
+
 			planetarium.addPointer({
 				'ra':83.8220792,
                 'dec':-5.3911111,
@@ -47,6 +49,7 @@
                 'credit':'Wikisky',
                 'colour':'rgb(255,220,220)'
 			})
+			
 		});
 		
 	</script>
