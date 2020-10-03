@@ -1,5 +1,6 @@
 doctype HTML
 head
+	title Above the Horizon
 	link(rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous")
 	link(rel="stylesheet" href="css/main.css")
 	script(src="js/stuquery.min.js" type="text/javascript")
@@ -15,16 +16,32 @@ head
 				projection: 'stereo'
 			});
 
+			function positionErrorHandler(err) {
+				if (err.code == 1) {
+					alert("Error: Access is denied!");
+				} else if (err.code == 2) {
+					alert("Error: Position is unavailable!");
+				}
+			}
+
 			function getLocation() {
+				console.log("here now")
 				if (navigator.geolocation) {
-					navigator.geolocation.getCurrentPosition(showPosition);
+					console.log("now here")
+					var options = {timeout: 60000};
+					navigator.geolocation.getCurrentPosition(showPosition, positionErrorHandler, options);
 				} else {
 					console.log("Geolocation not supported");
 				}
 			}
-
+			
 			function showPosition(position) {
-				generateURL(position.latitude, position.longitude)
+				console.log("Here")
+				if (position.latitude === undefined || position.longitude === undefined) {
+					generateURL(43.6532, 79.3832)
+				} else {
+					generateURL(position.latitude, position.longitude)
+				}
 			}
 
 			function generateURL(latitude, longitude) {
@@ -47,6 +64,7 @@ head
 				planetarium.setLongitude(long);
 				planetarium.moveIt();
 			} else {
+				console.log("Here")
 				getLocation();
 			}
 
@@ -64,7 +82,7 @@ head
 
 body
 	nav(class="navbar navbar-expand-md navbar-dark bg-dark fixed-top")
-		a(class="navbar-brand" href="#") Placeholder
+		a(class="navbar-brand" href="#") Orbital View
 		div(class="form-inline my-2 my-lg-0 right-align-form")
 			input(id="latitude" class="form-control mr-sm-2" type="text" placeholder="Latitude" aria-label="Latitude")
 			input(id="longitude" class="form-control mr-sm-2" type="text" placeholder="Longtitude" aria-label="Longitude")
