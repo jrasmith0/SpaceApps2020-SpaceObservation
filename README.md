@@ -1,6 +1,8 @@
 # OrbitalView  
 ### Project solution for the 2020 Space Apps Hackathon challenge: Orbital Sky
 
+** Note: Deployed variant on Heroku does NOT have access to the data source due to limitations **
+
 #### High level summary:
 Using a combination of tools we present to you Orbital View, our solution to the Orbital Sky challenge. Orbital View is an application that allows users to interact with the night sky in a whole new way. Users are able to not only see satellites above, but being able to step into the viewpoint of those satellites. This is achieved by dynamically selecting a given satellite from the night sky to see the Earth in its magnificence by leveraging a combination of the satellite's positioning and Nasa's WorldWind. 
 
