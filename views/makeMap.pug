@@ -31,6 +31,9 @@ head
 				projection: 'stereo'
 			});
 
+
+			var json = !{JSON.stringify(jsonList)};
+
 			function positionErrorHandler(err) {
 				if (err.code == 1) {
 					alert("Error: Access is denied!");
@@ -92,6 +95,7 @@ head
 				let dateStr = `${dateValue}T${dateVars[4]}.000`;
 				let date = new Date(dateStr);
 				planetarium.updateClock(date);
+				updatePointer(date);
 				console.log(planetarium.clock);
 			}
 
@@ -119,9 +123,40 @@ head
 				updateLongitude.value = planetarium.longitude.deg;
 			}
 
+			function updatePointer(curDate){
+
+			for(let i =0; i < 10000 ; i++){
+				let ra = json[i]['\"RA (J2000']['0)\"'];
+				let dec = json[i]['\"Dec'][' (J2000']['0)\"'];
+				let name =  json[i]['\"Target Name\"']
+				let date = new Date(json[i]['\"Data Release\"']);
+				let curDate = new Date(planetarium.clock);
+				let checkDateMin =new Date(curDate.getTime() - (24*60*60*1000));
+				let checkDateMax = new Date(curDate.getTime() + (24*60*60*1000));
+				console.log("cur: " + curDate + " date: " + date + " check min: " + checkDateMin + " checkDateMax " + checkDateMax);
+
+				if(curDate > date && checkDateMin < date){
+					planetarium.addPointer({
+						'ra':ra,
+						'dec':dec,
+						'label': name,
+						'colour':'rgb(255,220,220)',
+						'url': 'worldWind.html?pos=' + ra + ',' + dec + ',10000000&loc=' + lat + ',' + long
+					})
+				}else if(curDate < date && checkDateMax > date){
+					planetarium.addPointer({
+						'ra':ra,
+						'dec':dec,
+						'label': name,
+						'colour':'rgb(255,220,220)',
+						'url': 'worldWind.html?pos=' + ra + ',' + dec + ',10000000&loc=' + lat + ',' + long
+					})
+				}
+			}
+			}
+
 			initializeSideNav();
 
-			var json = !{JSON.stringify(jsonList)};
 
 			for(let i =0; i <  6; i++){
 				let ra = json[i]['\"RA (J2000']['0)\"'];
