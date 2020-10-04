@@ -11,6 +11,21 @@ head
 			let lat, long;
 			let searchParams = new URLSearchParams(window.location.search)
 
+			var months = {
+				'Jan' : '01',
+				'Feb' : '02',
+				'Mar' : '03',
+				'Apr' : '04',
+				'May' : '05',
+				'Jun' : '06',
+				'Jul' : '07',
+				'Aug' : '08',
+				'Sep' : '09',
+				'Oct' : '10',
+				'Nov' : '11',
+				'Dec' : '12'
+			}
+
 			var planetarium = S.virtualsky({
 				id: 'starmap',
 				projection: 'stereo'
@@ -46,11 +61,43 @@ head
 				window.location = url;
 			}
 
-			document.getElementById("update").addEventListener("click", updateLocation, false);
+			let updateTime = document.getElementById("updateTime");
+			let updateTimeValue = document.getElementById("updateTimeValue");
 
-			function updateLocation() {
-				latitude = document.getElementById('latitude').value;
-				longitude = document.getElementById('longitude').value;
+			let updateDate = document.getElementById("updateDate");
+			let updateDateValue = document.getElementById("updateDateValue");
+
+			let updateLatitude = document.getElementById("updateLatitude");
+			let updateLongitude = document.getElementById("updateLongitude");
+			let updateLocation = document.getElementById("updateLocation");
+
+			updateTime.addEventListener("click", funcUpdateTime, false);
+			updateDate.addEventListener("click", funcUpdateDate, false);
+			updateLocation.addEventListener("click", funcUpdateLocation, false);
+
+			console.log(planetarium.clock);
+
+			function funcUpdateTime() {
+				let time = updateTimeValue.value;
+				let dateVars = planetarium.clock.toString().split(" ");
+				let dateStr = `${dateVars[3]}-${months[dateVars[1]]}-${dateVars[2]}T${time}.000`;
+				let date = new Date(dateStr);
+				planetarium.updateClock(date);
+				console.log(planetarium.clock);
+			}
+
+			function funcUpdateDate() {
+				let dateValue = updateDateValue.value;
+				let dateVars = planetarium.clock.toString().split(" ");
+				let dateStr = `${dateValue}T${dateVars[4]}.000`;
+				let date = new Date(dateStr);
+				planetarium.updateClock(date);
+				console.log(planetarium.clock);
+			}
+
+			function funcUpdateLocation() {
+				let latitude = updateLatitude.value;
+				let longitude = updateLongitude.value;
 				generateURL(latitude, longitude);
 			}
 			
@@ -63,6 +110,16 @@ head
 			} else {
 				getLocation();
 			}
+
+			function initializeSideNav() {
+				let dateVars = planetarium.clock.toString().split(" ");
+				updateTimeValue.value = dateVars[4];
+				updateDateValue.value = `${dateVars[3]}-${months[dateVars[1]]}-${dateVars[2]}`;
+				updateLatitude.value = planetarium.latitude.deg;
+				updateLongitude.value = planetarium.longitude.deg;
+			}
+
+			initializeSideNav();
 
 			var json = !{JSON.stringify(jsonList)};
 
@@ -94,10 +151,7 @@ head
 body
 	nav(class="navbar navbar-expand-md navbar-dark bg-dark fixed-top")
 		a(class="navbar-brand" href="#") ORBITAL VIEW
-		div(class="form-inline my-2 my-lg-0 right-align-form")
-			input(id="latitude" class="form-control mr-sm-2" type="text" placeholder="Latitude" aria-label="Latitude")
-			input(id="longitude" class="form-control mr-sm-2" type="text" placeholder="Longtitude" aria-label="Longitude")
-			button(id="update" class="btn btn-outline-success my-2 my-sm-0" type="button") Update
+
 
 	div(class="main-container")
 		div(id="sidebar-wrapper" class="bg-light border-right")
@@ -105,29 +159,26 @@ body
 				span(class="list-group-item list-group-item-action bg-light") Time
 					br
 					br
-					input(type="time" class="sidenavInput" id="time" name="time")
+					input(type="time" class="sidenavInput" id="updateTimeValue" name="updateTimeValue")
 					br
 					br
-					button(id="submitTime" class="btn my-2 my-sm-0 btn-outline-dark" type="button") Update Time
+					button(id="updateTime" class="btn my-2 my-sm-0 btn-outline-dark" type="button") Update Time
 				span(class="list-group-item list-group-item-action bg-light") Date
 					br
 					br
-					input(type="date" class="sidenavInput" id="date" name="date")
+					input(type="date" class="sidenavInput" id="updateDateValue" name="updateDateValue")
 					br
 					br
-					button(id="submitDate" class="btn my-2 my-sm-0 btn-outline-dark" type="button") Update Date
+					button(id="updateDate" class="btn my-2 my-sm-0 btn-outline-dark" type="button") Update Date
 				span(class="list-group-item list-group-item-action bg-light") Latitude
 					br
 					br
-					input(type="text" class="sidenavInput" id="latitudeValue" name="latitudeValue")
+					input(type="text" class="sidenavInput" id="updateLatitude" name="updateLatitude")
 					br
 					br
-					button(id="submitLatitude" class="btn my-2 my-sm-0 btn-outline-dark" type="button") Update Latitude
-				span(class="list-group-item list-group-item-action bg-light") Longitude
+					p Longitude
+					input(type="text" class="sidenavInput" id="updateLongitude" name="updateLongitude")
 					br
 					br
-					input(type="text" class="sidenavInput" id="longitudeValue" name="longitudeValue")
-					br
-					br
-					button(id="submitLongitude" class="btn my-2 my-sm-0 btn-outline-dark" type="button") Update Longitude
+					button(id="updateLocation" class="btn my-2 my-sm-0 btn-outline-dark" type="button") Update Location
 		div(id="starmap")
