@@ -28,7 +28,10 @@ head
 
 			var planetarium = S.virtualsky({
 				id: 'starmap',
-				projection: 'stereo'
+				projection: 'stereo',
+				showdate: false,
+				showposition: false,
+				gridlines_az: true
 			});
 
 			function positionErrorHandler(err) {
@@ -75,15 +78,12 @@ head
 			updateDate.addEventListener("click", funcUpdateDate, false);
 			updateLocation.addEventListener("click", funcUpdateLocation, false);
 
-			console.log(planetarium.clock);
-
 			function funcUpdateTime() {
 				let time = updateTimeValue.value;
 				let dateVars = planetarium.clock.toString().split(" ");
 				let dateStr = `${dateVars[3]}-${months[dateVars[1]]}-${dateVars[2]}T${time}.000`;
 				let date = new Date(dateStr);
 				planetarium.updateClock(date);
-				console.log(planetarium.clock);
 			}
 
 			function funcUpdateDate() {
@@ -92,7 +92,6 @@ head
 				let dateStr = `${dateValue}T${dateVars[4]}.000`;
 				let date = new Date(dateStr);
 				planetarium.updateClock(date);
-				console.log(planetarium.clock);
 			}
 
 			function funcUpdateLocation() {
@@ -181,4 +180,9 @@ body
 					br
 					br
 					button(id="updateLocation" class="btn my-2 my-sm-0 btn-outline-dark" type="button") Update Location
+				span(class="creators")
+					p Space Apps 2020: Orbital View Challenge
+					hr
+					p Solution Developed By:
+					p Mason Cooper, Shayne Taylor, Joshua Smith
 		div(id="starmap")
