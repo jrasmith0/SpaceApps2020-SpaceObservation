@@ -16,7 +16,6 @@ Our project was developed through the combination of a web-based planetarium jav
 We utilized the space agency data by leveraging the CSA satellite data repositories downloaded as a CSV format and read into the application through JSON. This information was then translated into live markers on the planetarium corresponding to the positioning of the satellites in the night sky above.
 
 #### Demonstration:
-** Youtube Link ComingSoonTM
 
 #### Data and Resources Used:
 VirtualSky Library, NASA's WorldWind, CADC NEOSSAT collection data
